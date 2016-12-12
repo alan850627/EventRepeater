@@ -11,7 +11,8 @@ import javax.swing.JOptionPane;
 
 public class Listener {
 	
-	private ArrayList<Event> events = new ArrayList<Event>();
+	public ArrayList<Event> events = new ArrayList<Event>();
+	public boolean listening = false;
 	
 	public Listener() {
 		beep();
@@ -20,6 +21,7 @@ public class Listener {
 			System.exit(0);
 		}
 
+		listening = true;
 		GlobalKeyboardHook keyboardHook = new GlobalKeyboardHook();
 		GlobalMouseHook mouseHook = new GlobalMouseHook();
 
@@ -30,6 +32,7 @@ public class Listener {
 					// Shut down on Escape
 					keyboardHook.shutdownHook();
 					mouseHook.shutdownHook();
+					listening = false;
 				} else {
 					System.out.println("Keyboard: " + event);
 					events.add(new Event("Keyboard", event));
@@ -44,8 +47,6 @@ public class Listener {
 				events.add(new Event("Mouse", event));
 			}
 		});
-
-		JOptionPane.showMessageDialog(null, "Listening... Press `Esc` to end");
 	}
 
 	private void beep() {
