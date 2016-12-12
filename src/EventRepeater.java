@@ -38,9 +38,16 @@ public class EventRepeater {
 
 	public void runEvents() {
 		for (Event event : events) {
-			if (event.type == Event.KEYBOARD) {
+			if (event.type == Event.KEYPRESS) {
+				
 			}
-			if (event.type == Event.MOUSE) {
+			if (event.type == Event.KEYRELEASE) {
+				
+			}
+			if (event.type == Event.MOUSEPRESS) {
+				
+			}
+			if (event.type == Event.MOUSERELEASE) {
 				
 			}
 		}
