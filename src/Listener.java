@@ -5,10 +5,14 @@ import lc.kra.system.mouse.GlobalMouseHook;
 import lc.kra.system.mouse.event.GlobalMouseAdapter;
 import lc.kra.system.mouse.event.GlobalMouseEvent;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
 public class Listener {
+	
+	private ArrayList<Event> events = new ArrayList<Event>();
+	
 	public Listener() {
 		beep();
 		if (JOptionPane.YES_OPTION != JOptionPane.showConfirmDialog(null,
@@ -18,24 +22,26 @@ public class Listener {
 
 		GlobalKeyboardHook keyboardHook = new GlobalKeyboardHook();
 		GlobalMouseHook mouseHook = new GlobalMouseHook();
-		
+
 		keyboardHook.addKeyListener(new GlobalKeyAdapter() {
 			@Override
 			public void keyReleased(GlobalKeyEvent event) {
-				System.out.println(event);
 				if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_ESCAPE) {
 					// Shut down on Escape
 					keyboardHook.shutdownHook();
 					mouseHook.shutdownHook();
+				} else {
+					System.out.println("Keyboard: " + event);
+					events.add(new Event("Keyboard", event));
 				}
-
 			}
 		});
-		
+
 		mouseHook.addMouseListener(new GlobalMouseAdapter() {
 			@Override
 			public void mouseReleased(GlobalMouseEvent event) {
 				System.out.println("Mouse: " + event);
+				events.add(new Event("Mouse", event));
 			}
 		});
 
