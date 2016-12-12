@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class Listener {
-	
+
 	public ArrayList<Event> events = new ArrayList<Event>();
 	public boolean listening = false;
-	
+
 	public Listener() {
 		beep();
 		if (JOptionPane.YES_OPTION != JOptionPane.showConfirmDialog(null,
@@ -27,6 +27,13 @@ public class Listener {
 
 		keyboardHook.addKeyListener(new GlobalKeyAdapter() {
 			@Override
+			public void keyPressed(GlobalKeyEvent event) {
+				beep();
+				System.out.println("Keyboard: " + event);
+				events.add(new Event(Event.KEYPRESS, event));
+			}
+
+			@Override
 			public void keyReleased(GlobalKeyEvent event) {
 				if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_ESCAPE) {
 					// Shut down on Escape
@@ -34,17 +41,26 @@ public class Listener {
 					mouseHook.shutdownHook();
 					listening = false;
 				} else {
+					beep();
 					System.out.println("Keyboard: " + event);
-					events.add(new Event("Keyboard", event));
+					events.add(new Event(Event.KEYRELEASE, event));
 				}
 			}
 		});
 
 		mouseHook.addMouseListener(new GlobalMouseAdapter() {
 			@Override
-			public void mouseReleased(GlobalMouseEvent event) {
+			public void mousePressed(GlobalMouseEvent event) {
+				beep();
 				System.out.println("Mouse: " + event);
-				events.add(new Event("Mouse", event));
+				events.add(new Event(Event.MOUSEPRESS, event));
+			}
+
+			@Override
+			public void mouseReleased(GlobalMouseEvent event) {
+				beep();
+				System.out.println("Mouse: " + event);
+				events.add(new Event(Event.MOUSERELEASE, event));
 			}
 		});
 	}
