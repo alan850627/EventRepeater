@@ -47,11 +47,10 @@ public class EventRepeater {
 	}
 
 	public void repeatEvents() {
-		// "https://page.issuu.com/$doc/swf/page_$slide.swf"
-		String link = "https://page.issuu.com/161103105145-c13267495d386c37a3a4136d6caaa968/swf/page_";
+		String file = "";
 		StringSelection stringSelection;
 		for (int i = 1; everythingOk && i < numToRepeat; i++) {
-			stringSelection = new StringSelection(link + (i+1) + ".swf");
+			stringSelection = new StringSelection(file + (i+1) + ".pdf");
 			Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
 			clpbrd.setContents(stringSelection, null);
 			
