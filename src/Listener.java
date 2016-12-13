@@ -14,6 +14,9 @@ public class Listener {
 	public ArrayList<Event> events = new ArrayList<Event>();
 	public boolean listening = false;
 
+	private boolean leftMousePressed = false;
+	private boolean rightMousePressed = false;
+
 	public Listener() {
 		beep();
 		if (JOptionPane.YES_OPTION != JOptionPane.showConfirmDialog(null,
@@ -28,9 +31,16 @@ public class Listener {
 		keyboardHook.addKeyListener(new GlobalKeyAdapter() {
 			@Override
 			public void keyPressed(GlobalKeyEvent event) {
-				beep();
-				System.out.println("Keyboard: " + event);
-				events.add(new Event(Event.KEYPRESS, event));
+				if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_ESCAPE) {
+					// Shut down on Escape
+					keyboardHook.shutdownHook();
+					mouseHook.shutdownHook();
+					listening = false;
+				} else {
+					beep();
+					System.out.println("Keyboard: " + event);
+					events.add(new Event(Event.KEYPRESS, event));
+				}
 			}
 
 			@Override
@@ -51,16 +61,42 @@ public class Listener {
 		mouseHook.addMouseListener(new GlobalMouseAdapter() {
 			@Override
 			public void mousePressed(GlobalMouseEvent event) {
-				beep();
-				System.out.println("Mouse: " + event);
-				events.add(new Event(Event.MOUSEPRESS, event));
+				if (!leftMousePressed
+						&& (event.getButtons() & GlobalMouseEvent.BUTTON_LEFT) != GlobalMouseEvent.BUTTON_NO) {
+					// press left mouse
+					beep();
+					System.out.println("Mouse: " + event);
+					events.add(new Event(Event.MOUSEPRESS_LEFT, event));
+					leftMousePressed = true;
+				}
+				if (!rightMousePressed
+						&& (event.getButtons() & GlobalMouseEvent.BUTTON_RIGHT) != GlobalMouseEvent.BUTTON_NO) {
+					// press right mouse
+					beep();
+					System.out.println("Mouse: " + event);
+					events.add(new Event(Event.MOUSEPRESS_RIGHT, event));
+					rightMousePressed = true;
+				}
 			}
 
 			@Override
 			public void mouseReleased(GlobalMouseEvent event) {
-				beep();
-				System.out.println("Mouse: " + event);
-				events.add(new Event(Event.MOUSERELEASE, event));
+				if (leftMousePressed
+						&& (event.getButtons() & GlobalMouseEvent.BUTTON_LEFT) == GlobalMouseEvent.BUTTON_NO) {
+					// release left mouse
+					beep();
+					System.out.println("Mouse: " + event);
+					events.add(new Event(Event.MOUSERELEASE_LEFT, event));
+					leftMousePressed = false;
+				}
+				if (rightMousePressed
+						&& (event.getButtons() & GlobalMouseEvent.BUTTON_RIGHT) == GlobalMouseEvent.BUTTON_NO) {
+					// release right mouse
+					beep();
+					System.out.println("Mouse: " + event);
+					events.add(new Event(Event.MOUSERELEASE_RIGHT, event));
+					rightMousePressed = false;
+				}
 			}
 		});
 	}
