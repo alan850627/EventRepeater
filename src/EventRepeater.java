@@ -14,7 +14,8 @@ import lc.kra.system.mouse.event.GlobalMouseEvent;
 
 public class EventRepeater {
 	private ArrayList<Event> events = new ArrayList<Event>();
-	private int numToRepeat = 0;
+	private int from = 0;
+	private int to = 0;
 	private boolean everythingOk = true;
 	private Robot robot;
 	private GlobalKeyboardHook keyboardHook;
@@ -23,8 +24,9 @@ public class EventRepeater {
 		events = null;
 	}
 
-	public EventRepeater(ArrayList<Event> e, int n) {
-		numToRepeat = n;
+	public EventRepeater(ArrayList<Event> e, int f, int t) {
+		from = f;
+		to = t;
 		events = e;
 
 		try {
@@ -49,7 +51,7 @@ public class EventRepeater {
 	public void repeatEvents() {
 		String file = "";
 		StringSelection stringSelection;
-		for (int i = 1; everythingOk && i < numToRepeat; i++) {
+		for (int i = from; everythingOk && i < to; i++) {
 			stringSelection = new StringSelection(file + (i+1) + ".pdf");
 			Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
 			clpbrd.setContents(stringSelection, null);
