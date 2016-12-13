@@ -16,6 +16,9 @@ public class Listener {
 
 	private boolean leftMousePressed = false;
 	private boolean rightMousePressed = false;
+	
+	private GlobalKeyboardHook keyboardHook;
+	private GlobalMouseHook mouseHook;
 
 	public Listener() {
 		beep();
@@ -25,8 +28,8 @@ public class Listener {
 		}
 
 		listening = true;
-		GlobalKeyboardHook keyboardHook = new GlobalKeyboardHook();
-		GlobalMouseHook mouseHook = new GlobalMouseHook();
+		keyboardHook = new GlobalKeyboardHook();
+		mouseHook = new GlobalMouseHook();
 
 		keyboardHook.addKeyListener(new GlobalKeyAdapter() {
 			@Override
