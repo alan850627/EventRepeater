@@ -1,3 +1,4 @@
+import java.sql.Timestamp;
 
 public class Event {
 	public static final int KEYPRESS = 0;
@@ -7,6 +8,7 @@ public class Event {
 
 	int type;
 	Object data;
+	Timestamp time;
 
 	public Event() {
 		type = -1;
@@ -14,6 +16,7 @@ public class Event {
 	}
 	
 	public Event(int t, Object d) {
+		time = new Timestamp(System.currentTimeMillis());
 		type = t;
 		data = d;
 	}

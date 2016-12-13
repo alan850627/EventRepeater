@@ -1,4 +1,4 @@
-# IssuuConverter
-Converts Issuu SWF to PDFs using Chrome.
+# Event Repeater
+Repeat Keystrokes and keypresses in real time.
 
 # Usage
