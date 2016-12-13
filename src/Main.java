@@ -19,7 +19,7 @@ public class Main {
 			System.exit(0);
 		}
 		
-		EventRepeater repeater = new EventRepeater(mainListener.events, 1);
+		EventRepeater repeater = new EventRepeater(mainListener.events, 26);
 		repeater.repeatEvents();
 	}	
 }

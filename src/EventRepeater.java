@@ -1,5 +1,8 @@
 import java.awt.AWTException;
 import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -44,7 +47,14 @@ public class EventRepeater {
 	}
 
 	public void repeatEvents() {
-		for (int i = 0; everythingOk && i < numToRepeat; i++) {
+		// "https://page.issuu.com/$doc/swf/page_$slide.swf"
+		String link = "https://page.issuu.com/161103105145-c13267495d386c37a3a4136d6caaa968/swf/page_";
+		StringSelection stringSelection;
+		for (int i = 1; everythingOk && i < numToRepeat; i++) {
+			stringSelection = new StringSelection(link + (i+1) + ".swf");
+			Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
+			clpbrd.setContents(stringSelection, null);
+			
 			runEvents();
 		}
 		keyboardHook.shutdownHook();
