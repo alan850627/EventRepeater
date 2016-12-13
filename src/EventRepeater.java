@@ -111,6 +111,21 @@ public class EventRepeater {
 		case 13:
 			ks = KeyEvent.VK_ENTER;
 			break;
+		case 37: 
+			ks = KeyEvent.VK_LEFT;
+			break;
+		case 38: 
+			ks = KeyEvent.VK_UP;
+			break;
+		case 39: 
+			ks = KeyEvent.VK_RIGHT;
+			break;
+		case 40: 
+			ks = KeyEvent.VK_DOWN;
+			break;
+		case 46:
+			ks = KeyEvent.VK_DELETE;
+			break;
 		case 160:
 			ks = KeyEvent.VK_SHIFT;
 			break;
